@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepage</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
+    <!-- import JQuery CDN  -->
+    <script>
+        function to_jobpage(){
+            window.location.href = '/jobpage';
+        }
+    </script>
+
+    <script>
+        $(document).ready(function(){
+            get_list();
+        });
+
+        function get_list(){
+            let url = 'https://my-json-server.typicode.com/jjjosephhh/test-db-002/people'
+            $.ajax({
+                type: 'GET',
+                url: url,
+                data:{},
+                success: function(response){
+                    let rows = response;
+                    let temp_html = '';
+                    for (let i = 0; i < rows.length; i++){
+                        let row = rows[i];
+                        let frontname = row['fname'];
+                        let lastname = row['lname'];
+                        let age = row['age'];
+                        console.log(frontname, lastname, age);
+                        temp_html += `<li> ${frontname}: ${lastname}: ${age} </li>`;
+                    }
+                    $('#my-list').append(temp_html);
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <h1>This is Main Page</h1>
+
+    <a href="/jobpage"></a>
+    <button onclick="to_jobpage()">Menuju Job Page</button>
+
+    <ul id="my-list"></ul>
+    
+</body>
+</html>
+
+<!-- CONTOH PENGAMBILAN DATA MENGGUNAKAN AJAX -->
